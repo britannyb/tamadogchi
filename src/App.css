@@ -17,7 +17,10 @@ html,
     "Segoe UI",
     Roboto,
     sans-serif;
-  background-color: #ffffff;
+}
+
+body {
+  background: white url("/images/bg.png") center center / cover no-repeat fixed;
 }
 
 .game-container {
@@ -27,11 +30,9 @@ html,
   align-items: center;
   justify-content: center;
   position: relative;
-  background-color: #ffffff;
   user-select: none;
 }
 
-/* Main Device Shell Container */
 .device-wrapper {
   position: relative;
   height: 550px;
@@ -233,4 +234,11 @@ html,
 
 .btn-right img {
   transform: rotate(90deg);
+}
+
+@media (max-width: 600px) {
+  body {
+    background: white url("/images/mobilebg.png") center center / cover
+      no-repeat fixed;
+  }
 }
