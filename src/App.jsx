@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 
 import casingImg from "./assets/device-casing.svg";
@@ -12,6 +12,10 @@ import itemFood from "./assets/item-food.svg";
 import itemBed from "./assets/item-bed.svg";
 import itemSoap from "./assets/item-soap.svg";
 import itemLove from "./assets/item-love.svg";
+import eatGif from "./assets/eat.gif";
+import sleepGif from "./assets/sleep.gif";
+import washGif from "./assets/wash.gif";
+import playGif from "./assets/play.gif";
 
 let audioCtx = null;
 
@@ -72,11 +76,38 @@ export default function App() {
   const [isBouncing, setIsBouncing] = useState(false);
   const [particle, setParticle] = useState(null);
 
+  const [activeGif, setActiveGif] = useState(null);
+  const gifTimeoutRef = useRef(null);
+
   const items = [
-    { id: "food", name: "Feed", image: itemFood, actionText: "hunger--" },
-    { id: "sleep", name: "Sleep", image: itemBed, actionText: "sleep++" },
-    { id: "hygiene", name: "Clean", image: itemSoap, actionText: "hygiene++" },
-    { id: "love", name: "Love", image: itemLove, actionText: "boredom--" },
+    {
+      id: "food",
+      name: "Feed",
+      image: itemFood,
+      gif: eatGif,
+      actionText: "hunger--",
+    },
+    {
+      id: "sleep",
+      name: "Sleep",
+      image: itemBed,
+      gif: sleepGif,
+      actionText: "sleep++",
+    },
+    {
+      id: "hygiene",
+      name: "Clean",
+      image: itemSoap,
+      gif: washGif,
+      actionText: "hygiene++",
+    },
+    {
+      id: "love",
+      name: "Love",
+      image: itemLove,
+      gif: playGif,
+      actionText: "boredom--",
+    },
   ];
 
   useEffect(() => {
@@ -107,6 +138,16 @@ export default function App() {
     const activeItem = items[selectedItem];
     setParticle(activeItem.actionText);
     setTimeout(() => setParticle(null), 800);
+
+    if (gifTimeoutRef.current) {
+      clearTimeout(gifTimeoutRef.current);
+    }
+
+    setActiveGif(`${activeItem.gif}?t=${Date.now()}`);
+
+    gifTimeoutRef.current = setTimeout(() => {
+      setActiveGif(null);
+    }, 2000);
 
     switch (selectedItem) {
       case 0:
@@ -175,7 +216,7 @@ export default function App() {
           {particle && <div className="particle">{particle}</div>}
 
           <div className={`pet-avatar ${isBouncing ? "bounce" : ""}`}>
-            <img src={petImg} alt="Pet" className="pet-img" />
+            <img src={activeGif || petImg} alt="Pet" className="pet-img" />
           </div>
 
           <div className="carousel-container">
