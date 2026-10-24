@@ -73,10 +73,10 @@ export default function App() {
   const [particle, setParticle] = useState(null);
 
   const items = [
-    { id: "food", name: "Feed", image: itemFood, actionText: "food++" },
+    { id: "food", name: "Feed", image: itemFood, actionText: "hunger--" },
     { id: "sleep", name: "Sleep", image: itemBed, actionText: "sleep++" },
-    { id: "hygiene", name: "Clean", image: itemSoap, actionText: "clean++" },
-    { id: "love", name: "Love", image: itemLove, actionText: "love++" },
+    { id: "hygiene", name: "Clean", image: itemSoap, actionText: "hygiene++" },
+    { id: "love", name: "Love", image: itemLove, actionText: "boredom--" },
   ];
 
   useEffect(() => {
